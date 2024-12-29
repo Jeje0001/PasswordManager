@@ -1,13 +1,4 @@
 from cryptography.fernet import Fernet
-master_pwd=input("What is the master password")
-
-def viewkey():
-    file=open("key.key","rb")
-    key=file.read()
-    file.close()
-    return key
-key=viewkey() + master_pwd.encode()
-fer=Fernet(key)
 
 # def createkey():
 #     key=Fernet.generate_key()
@@ -15,13 +6,23 @@ fer=Fernet(key)
 #     with open("key.key","wb") as key_file:
 #         key_file.write(key)
 
+# createkey()
+def viewkey():
+    file=open("key.key","rb")
+    key=file.read()
+    file.close()
+    return key
+key=viewkey() 
+fer=Fernet(key)
+
+
 
 def view():
     with open("passwords.txt","r") as f:
         for line in f.readlines():
             data=line.rstrip()
             user,passw= data.split("|")
-            print("Username: "+ user, "Password: "+ str(fer.decrypt(passw)))
+            print("Username: "+ user, "Password: "+ str(fer.decrypt(passw.encode()).decode()))
             
                    # print(f.read())
 def add():
@@ -43,4 +44,3 @@ while True:
         print("Invalid Input")
         continue
 
-#Continue at 1:34:20
